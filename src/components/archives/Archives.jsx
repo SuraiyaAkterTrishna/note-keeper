@@ -1,12 +1,10 @@
-import { useContext } from 'react';
-
 import { Box, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { DataContext } from '../../context/DataProvider';
-
 //components
 import Archive from './Archive';
+import useArchives from '../../hooks/useArchives';
+import archiveDelete from '../../hooks/archiveDelete';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     ...theme.mixins.toolbar,
@@ -14,7 +12,47 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const Archives = () => {
 
-    const { archiveNotes } = useContext(DataContext);
+    const [archiveNotes] = useArchives([]);
+
+    const unArchiveNote = (id) => {
+      const updatedNotes = archiveNotes.find((data) => data._id === id);
+      console.log(id);
+      // send to notes database
+      fetch("http://localhost:5000/notes", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(updatedNotes),
+      })
+        .then((res) => res.json())
+        .then((inserted) => {
+          if (inserted.insertedId) {
+            console.log("Note move to archive successfully");
+          } else {
+            console.log("Failed to move the Note");
+          }
+        });
+      archiveDelete(id);
+    }
+    
+    const deleteNote = (id) => {
+      const updatedNotes = archiveNotes.find((data) => data._id === id);
+      console.log(id);
+      // send to trash database
+      fetch("http://localhost:5000/trash", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(updatedNotes),
+      })
+        .then((res) => res.json())
+        .then((inserted) => {
+          if (inserted.insertedId) {
+            console.log("Note move to archive successfully");
+          } else {
+            console.log("Failed to move the Note");
+          }
+        });
+        archiveDelete(id);
+    }
 
     return (
         <Box sx={{ display: 'flex', width: '100%' }}>
@@ -23,8 +61,8 @@ const Archives = () => {
                 <Grid container>
                     {
                         archiveNotes.map(archive => (
-                            <Grid item>
-                                <Archive archive={archive} />
+                            <Grid  key={archive._id} item>
+                                <Archive key={archive._id} archive={archive} unArchiveNote={unArchiveNote} deleteNote={deleteNote} />
                             </Grid>
                         ))
                     }

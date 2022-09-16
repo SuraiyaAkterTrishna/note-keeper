@@ -1,9 +1,7 @@
-import { useContext } from 'react';
-
 import { Box, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
-import { DataContext } from '../../context/DataProvider';
+import trashDelete from '../../hooks/trashDelete';
+import useDeleteNotes from '../../hooks/useDeleteNotes';
 
 //components
 import DeleteNote from './DeleteNote';
@@ -14,7 +12,31 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const DeleteNotes = () => {
 
-    const { deleteNotes } = useContext(DataContext);
+    const [deleteNotes] = useDeleteNotes([]);
+    const restoreNote = (id) => {
+        const updatedNotes = deleteNotes.find((data) => data._id === id);
+    console.log(id);
+    // send to notes database
+    fetch("http://localhost:5000/notes", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(updatedNotes),
+    })
+      .then((res) => res.json())
+      .then((inserted) => {
+        if (inserted.insertedId) {
+          console.log("Note move to archive successfully");
+        } else {
+          console.log("Failed to move the Note");
+        }
+      });
+    trashDelete(id);
+    }
+
+    const removeNote = (id) => {
+      // delete data from trash section
+      trashDelete(id);
+    }
 
     return (
         <Box sx={{ display: 'flex', width: '100%' }}>
@@ -23,8 +45,8 @@ const DeleteNotes = () => {
                 <Grid container>
                     {
                         deleteNotes.map(deleteNote => (
-                            <Grid item>
-                                <DeleteNote deleteNote={deleteNote} />
+                            <Grid  key={deleteNote._id} item>
+                                <DeleteNote key={deleteNote._id} deleteNote={deleteNote} restoreNote={restoreNote} removeNote={removeNote} />
                             </Grid>
                         ))
                     }

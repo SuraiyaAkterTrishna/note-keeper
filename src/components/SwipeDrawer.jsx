@@ -17,6 +17,7 @@ const openedMixin = (theme) => ({
         duration: theme.transitions.duration.enteringScreen,
     }),
     overflowX: 'hidden',
+    width: '170px'
 });
 
 const closedMixin = (theme) => ({
@@ -38,7 +39,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
-        width: drawerWidth,
+        width: '15px',
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',

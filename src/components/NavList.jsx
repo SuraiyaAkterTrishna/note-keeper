@@ -16,10 +16,10 @@ const NavList = () => {
             navList.map(list => (
                 <ListItem button key={list.id}>
                     <Link to={`${list.route}`} style={{ textDecoration: 'none', display: 'flex', color: 'inherit'}}>
-                        <ListItemIcon style={{ alignItems: 'center'}}>
+                        <ListItemIcon style={{ alignItems: 'center', marginRight: '5px'}}>
                             {list.icon}
                         </ListItemIcon>
-                        <ListItemText primary={list.name} />
+                        <ListItemText  primary={list.name} />
                     </Link>
                 </ListItem>
             ))

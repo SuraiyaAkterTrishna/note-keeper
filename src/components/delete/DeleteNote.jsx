@@ -1,9 +1,7 @@
-import { useContext } from 'react';
-
 import { Card, CardContent, CardActions, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { RestoreFromTrashOutlined as Restore, DeleteForeverOutlined as Delete } from '@mui/icons-material';
-import { DataContext } from '../../context/DataProvider';
+
 
 const StyledCard = styled(Card)`
     border: 1px solid #e0e0e0;
@@ -13,21 +11,7 @@ const StyledCard = styled(Card)`
     box-shadow: none;
 `
 
-const DeleteNote = ({ deleteNote }) => {
-
-    const { deleteNotes, setNotes, setAcrchiveNotes, setDeleteNotes } = useContext(DataContext);
-
-    const restoreNote = (deleteNote) => {
-        const updatedNotes = deleteNotes.filter(data => data.id !== deleteNote.id);
-        setDeleteNotes(updatedNotes);
-        setNotes(prevArr => [deleteNote, ...prevArr]);
-    }
-
-    const removeNote = (deleteNote) => {
-        const updatedNotes = deleteNotes.filter(data => data.id !== deleteNote.id);
-        setDeleteNotes(updatedNotes);
-    }
-
+const DeleteNote = ({ deleteNote, removeNote, restoreNote }) => {
     return (
         <StyledCard>
                 <CardContent>
@@ -38,11 +22,11 @@ const DeleteNote = ({ deleteNote }) => {
                     <Delete 
                         fontSize="small" 
                         style={{ marginLeft: 'auto' }} 
-                        onClick={() => removeNote(deleteNote)}
+                        onClick={() => removeNote(deleteNote._id)}
                     />
                     <Restore 
                         fontSize="small"
-                        onClick={() => restoreNote(deleteNote)}
+                        onClick={() => restoreNote(deleteNote._id)}
                     />
                 </CardActions>
         </StyledCard>
