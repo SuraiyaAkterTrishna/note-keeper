@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useArchives = () => {
     const [archiveNotes, setArchiveNotes] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:5000/archives")
+        fetch("https://immense-sea-60701.herokuapp.com/archives")
           .then((res) => res.json())
           .then((data) => setArchiveNotes(data));
       }, [archiveNotes]);

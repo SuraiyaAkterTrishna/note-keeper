@@ -1,5 +1,5 @@
 const archiveDelete = (id) => {
-    const url = `http://localhost:5000/archives/${id}`;
+    const url = `https://immense-sea-60701.herokuapp.com/archives/${id}`;
 fetch(url, {
   method: "DELETE",
 })

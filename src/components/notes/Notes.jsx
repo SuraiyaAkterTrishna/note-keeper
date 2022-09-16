@@ -20,7 +20,7 @@ const Notes = () => {
     const updatedNotes = notes.find((data) => data._id === id);
     console.log(id);
     // send to archive database
-    fetch("http://localhost:5000/archives", {
+    fetch("https://immense-sea-60701.herokuapp.com/archives", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(updatedNotes),
@@ -34,7 +34,7 @@ const Notes = () => {
         }
       });
     // delete data from notes section
-    const url = `http://localhost:5000/notes/${id}`;
+    const url = `https://immense-sea-60701.herokuapp.com/notes/${id}`;
     fetch(url, {
       method: "DELETE",
     })
@@ -54,7 +54,7 @@ const Notes = () => {
     const deleteNote = notes.find((data) => data._id === id);
     console.log(id);
     // send to trash database
-    fetch("http://localhost:5000/trash", {
+    fetch("https://immense-sea-60701.herokuapp.com/trash", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(deleteNote),
@@ -68,7 +68,7 @@ const Notes = () => {
         }
       });
     // delete data from notes section
-    fetch(`http://localhost:5000/notes/${id}`, {
+    fetch(`https://immense-sea-60701.herokuapp.com/notes/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

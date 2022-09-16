@@ -2,7 +2,7 @@
 
 
 const nodeDelete = (id) => {
-    const url = `http://localhost:5000/notes/${id}`;
+    const url = `https://immense-sea-60701.herokuapp.com/notes/${id}`;
 fetch(url, {
   method: "DELETE",
 })

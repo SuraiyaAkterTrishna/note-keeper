@@ -34,7 +34,7 @@ const Form = () => {
 
     if (addNote.heading || addNote.text) {
       // send to database
-      fetch("http://localhost:5000/notes", {
+      fetch("https://immense-sea-60701.herokuapp.com/notes", {
         method: "POST",
         headers: {"content-type": "application/json"},
         body: JSON.stringify(addNote),

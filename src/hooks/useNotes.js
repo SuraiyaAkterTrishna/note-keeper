@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useNotes = () => {
     const [notes, setNotes] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/notes")
+    fetch("https://immense-sea-60701.herokuapp.com/notes")
       .then((res) => res.json())
       .then((data) => setNotes(data));
   }, [notes]);

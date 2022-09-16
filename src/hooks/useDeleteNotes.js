@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useDeleteNotes = () => {
     const [deleteNotes, setDeleteNotes] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:5000/trash")
+        fetch("https://immense-sea-60701.herokuapp.com/trash")
           .then((res) => res.json())
           .then((data) => setDeleteNotes(data));
       }, [deleteNotes]);

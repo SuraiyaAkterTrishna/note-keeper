@@ -18,7 +18,7 @@ const Archives = () => {
       const updatedNotes = archiveNotes.find((data) => data._id === id);
       console.log(id);
       // send to notes database
-      fetch("http://localhost:5000/notes", {
+      fetch("https://immense-sea-60701.herokuapp.com/notes", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(updatedNotes),
@@ -38,7 +38,7 @@ const Archives = () => {
       const updatedNotes = archiveNotes.find((data) => data._id === id);
       console.log(id);
       // send to trash database
-      fetch("http://localhost:5000/trash", {
+      fetch("https://immense-sea-60701.herokuapp.com/trash", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(updatedNotes),

@@ -1,5 +1,5 @@
 const trashDelete = (id) => {
-    const url = `http://localhost:5000/trash/${id}`;
+    const url = `https://immense-sea-60701.herokuapp.com/trash/${id}`;
 fetch(url, {
   method: "DELETE",
 })
