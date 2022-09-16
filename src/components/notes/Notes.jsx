@@ -1,9 +1,17 @@
 import { Box, Grid } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { reorder } from "../../utils/common-utils";
 
 //components
 import Form from "./Form";
 import Note from "./Note";
+import EmptyNotes from "./EmptyNotes";
 import useNotes from "../../hooks/useNotes";
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  ...theme.mixins.toolbar,
+}));
 
 const Notes = () => {
   const [notes, setNotes] = useNotes([]);
@@ -70,28 +78,57 @@ const Notes = () => {
       });
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = reorder(notes, result.source.index, result.destination.index);
+    setNotes(items);
+  };
+
   return (
     <Box sx={{ display: "flex", width: "100vw" }}>
       <Box sx={{ p: 3, width: "100%" }}>
+        <DrawerHeader />
         <Form />
+        {notes.length > 0 ? (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
                 <Grid
                   container
                   style={{ marginTop: 16 }}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
                 >
                   {notes.map((note, index) => (
+                    <Draggable
+                      key={note._id}
+                      draggableId={note._id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
                         <Grid
-                        key={note._id}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
                           item
                         >
                           <Note
-                            key={note._id}
                             note={note}
                             HandleArchiveNote={HandleArchiveNote}
                             HandleDeleteNote={HandleDeleteNote}
                           />
                         </Grid>
+                      )}
+                    </Draggable>
                   ))}
                 </Grid>
+              )}
+            </Droppable>
+          </DragDropContext>
+        ) : (
+          <EmptyNotes />
+        )}
       </Box>
     </Box>
   );
